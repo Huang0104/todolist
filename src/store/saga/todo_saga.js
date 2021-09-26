@@ -14,7 +14,9 @@ import {
   remove_todo,
   remove_todo_success,
   modify_todo,
-  modify_todo_success
+  modify_todo_success,
+  clear_todo_completed,
+  clear_todo_completed_success
 } from '../Actions/todo_actions'
 
 // 获取 todos 任务列表
@@ -28,7 +30,6 @@ function* add_todo_data(action) {
   // 发送异步请求
   let tasks = yield axios.post('http://localhost:3005/api/todos', {taskName: action.payload}).then(res => res.data)
   // 重新发送新的指令
-  console.log(tasks)
   yield put(add_todo_success(tasks.task))
 }
 
@@ -47,6 +48,12 @@ function* remove_todo_data(action) {
 
  }
 
+ // 清除 todos 已完成任务
+ function* clear_todo_data() {
+   yield axios.delete('http://localhost:3005/api/todos/clearCompleted')
+   yield put(clear_todo_completed_success())
+ }
+
 export default function* todoSaga() {
   // 获取 todos 任务列表操作
   yield takeEvery(load_todo, load_todo_data)
@@ -56,4 +63,6 @@ export default function* todoSaga() {
   yield takeEvery(remove_todo, remove_todo_data)
   // 修改 任务 状态
   yield takeEvery(modify_todo, modify_todo_data)
+  // 清除 已完成任务
+  yield takeEvery(clear_todo_completed, clear_todo_data)
 }

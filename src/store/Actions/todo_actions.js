@@ -22,3 +22,7 @@ export const modify_todo_success = createAction('modify_todo_success')
 
 // 筛选 todos 任务列表
 export const modify_todo_filter = createAction('modify_todo_filter')
+
+// 清除 todos 已完成任务
+export const clear_todo_completed = createAction('clear_todo_completed')
+export const clear_todo_completed_success = createAction('clear_todo_completedsuccess')

@@ -8,7 +8,8 @@ import {
   add_todo_success,
   remove_todo_success,
   modify_todo_success,
-  modify_todo_filter
+  modify_todo_filter,
+  clear_todo_completed_success
 } from '../Actions/todo_actions'
 
 const initailState = {
@@ -56,6 +57,16 @@ export default createReducer({
   [modify_todo_filter]: (state, action) => ({
     ...state,
     filter: action.payload
-  })
+  }),
+
+  // 清除 todos 已完成任务
+  [clear_todo_completed_success]: (state, action) => {
+    let todos = JSON.parse(JSON.stringify(state.todos))
+    todos = todos.filter(todo => !todo.isCompleted)
+    return {
+      ...state,
+      todos
+    }
+  }
 
 }, initailState) 
