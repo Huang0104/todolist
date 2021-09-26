@@ -58,7 +58,7 @@ const mapDistchToProps = dispatch => {
 
 
 // 筛选函数
-// todo 是之前的数据
+// todos 是之前的数据
 // filter 是需要筛选数据
 const modofyTodoFilter = (todos, filter) => {
   switch (filter) {
