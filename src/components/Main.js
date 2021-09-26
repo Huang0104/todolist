@@ -9,7 +9,6 @@ class Main extends Component {
     this.props.load_todo()
   }
   render() {
-    console.log(this.props)
     return (
       <section className="main">
         <input className="toggle-all" type="checkbox" />
@@ -36,7 +35,6 @@ class Main extends Component {
 
 // 获取 store 数据
 const mapStoreToProps = state => {
-  console.log(state)
   return {
     todos: state.todoReducer.todos
   }
