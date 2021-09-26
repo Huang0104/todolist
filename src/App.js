@@ -1,10 +1,18 @@
+import React, { Component } from "react";
+import Header from './components/Header'
+import Main from './components/Main'
+import Footer from './components/Footer'
 
-function App() {
-  return (
-    <div className="App">
-     这是 todolist 
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <div className="todoapp">
+        <Header />
+        <Main />
+        <Footer />
+      </div>
+    );
+  }
 }
 
 export default App;
