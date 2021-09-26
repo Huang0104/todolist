@@ -3,23 +3,30 @@
  */
 
 import { handleActions as createReducer } from 'redux-actions'
-import { load_todo_success, add_todo_success, remove_todo_success, modify_todo_success } from '../Actions/todo_actions'
+import {
+  load_todo_success,
+  add_todo_success,
+  remove_todo_success,
+  modify_todo_success,
+  modify_todo_filter
+} from '../Actions/todo_actions'
 
 const initailState = {
-  todos: []
+  todos: [],
+  filter: 'all'
 }
 
 // 获取 todos 任务列表成功
 export default createReducer({
   [load_todo_success]: (state,action) => {
     return {
-      todos: action.payload
+      ...state, todos: action.payload
     }
   },
 
   // 添加 todos 任务成功
   [add_todo_success]: (state, action) => ({
-    todos: [...state.todos, action.payload]
+    ...state, todos: [...state.todos, action.payload]
   }),
 
   // 删除 todos 任务成功
@@ -33,7 +40,7 @@ export default createReducer({
     let todos = JSON.parse(JSON.stringify(state.todos))
     // // 删除一项
     todos.splice(index, 1)
-    return {todos}
+    return {...state, todos}
   },
 
   // 修改 todos 任务状态
@@ -42,7 +49,13 @@ export default createReducer({
     let index = state.todos.findIndex(todo => todo.id === params.id)
     let todos = JSON.parse(JSON.stringify(state.todos))
     todos[index].isCompleted = params.isCompleted
-    return { todos }
-  }
+    return { ...state, todos }
+  },
+
+  // 筛选 todos 任务列表
+  [modify_todo_filter]: (state, action) => ({
+    ...state,
+    filter: action.payload
+  })
 
 }, initailState) 

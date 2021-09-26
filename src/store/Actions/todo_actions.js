@@ -19,3 +19,6 @@ export const remove_todo_success = createAction('remove_todo_success')
 // 修改 todos 任务状态
 export const modify_todo = createAction('modify_todo')
 export const modify_todo_success = createAction('modify_todo_success')
+
+// 筛选 todos 任务列表
+export const modify_todo_filter = createAction('modify_todo_filter')

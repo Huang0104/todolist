@@ -19,7 +19,6 @@ class Main extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <section className="main">
         <input className="toggle-all" type="checkbox" />
@@ -47,7 +46,7 @@ class Main extends Component {
 // 获取 store 数据
 const mapStoreToProps = state => {
   return {
-    todos: state.todoReducer.todos
+    todos: modofyTodoFilter(state.todoReducer.todos, state.todoReducer.filter)
   }
 }
 // 自定生成触发 Action 函数
@@ -56,5 +55,22 @@ const mapDistchToProps = dispatch => {
     ...bindActionCreators(todoActions, dispatch)
   }
 }
-export default connect(mapStoreToProps, mapDistchToProps)(Main)
 
+
+// 筛选函数
+// todo 是之前的数据
+// filter 是需要筛选数据
+const modofyTodoFilter = (todos, filter) => {
+  switch (filter) {
+    case 'all':
+      return todos
+    case 'active':
+      return todos.filter(todo => !todo.isCompleted)
+    case 'completed':
+      return todos.filter(todo => todo.isCompleted)
+    default: 
+      return todos
+  }
+}
+
+export default connect(mapStoreToProps, mapDistchToProps)(Main)
