@@ -11,3 +11,7 @@ export const load_todo_success = createAction('load_todo_success')
 // 获取 新增任务 相关指令
 export const add_todo = createAction('add_todo')
 export const add_todo_success = createAction('add_todo_success')
+
+// 删除 任务 指令
+export const remove_todo = createAction('remove_todo')
+export const remove_todo_success = createAction('remove_todo_success')

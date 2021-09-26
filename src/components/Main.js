@@ -12,7 +12,8 @@ class Main extends Component {
 
   // 删除任务
   removeTodo(id) {
-    console.log(id)
+    // 执行删除指令
+    this.props.remove_todo(id)
   }
 
   render() {
