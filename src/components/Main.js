@@ -13,10 +13,13 @@ class Main extends Component {
   // 删除任务
   removeTodo(id) {
     // 执行删除指令
-    this.props.remove_todo(id)
+    if(window.confirm('确定删除该任务吗？')){
+      this.props.remove_todo(id)
+    }
   }
 
   render() {
+    console.log(this.props)
     return (
       <section className="main">
         <input className="toggle-all" type="checkbox" />
@@ -24,9 +27,9 @@ class Main extends Component {
           {
             this.props.todos.map(item => {
               return (
-                <li key={item.id}>
+                <li key={item.id} className={item.isCompleted ? 'completed': ''}>
                   <div className="view">
-                    <input className="toggle" type="checkbox"/>
+                    <input className="toggle" type="checkbox" defaultChecked={item.isCompleted} onChange={(ev)=>{this.props.modify_todo({id: item.id, isCompleted: ev.target.checked})}}/>
                     <label>{item.taskName}</label>
                     <button onClick={this.removeTodo.bind(this, item.id)} className="destroy"></button>
                   </div>

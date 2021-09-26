@@ -15,3 +15,7 @@ export const add_todo_success = createAction('add_todo_success')
 // 删除 任务 指令
 export const remove_todo = createAction('remove_todo')
 export const remove_todo_success = createAction('remove_todo_success')
+
+// 修改 todos 任务状态
+export const modify_todo = createAction('modify_todo')
+export const modify_todo_success = createAction('modify_todo_success')

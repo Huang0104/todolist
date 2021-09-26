@@ -3,7 +3,7 @@
  */
 
 import { handleActions as createReducer } from 'redux-actions'
-import { load_todo_success, add_todo_success, remove_todo_success } from '../Actions/todo_actions'
+import { load_todo_success, add_todo_success, remove_todo_success, modify_todo_success } from '../Actions/todo_actions'
 
 const initailState = {
   todos: []
@@ -34,6 +34,15 @@ export default createReducer({
     // // 删除一项
     todos.splice(index, 1)
     return {todos}
+  },
+
+  // 修改 todos 任务状态
+  [modify_todo_success]: (state, action) => {
+    let params = action.payload.task
+    let index = state.todos.findIndex(todo => todo.id === params.id)
+    let todos = JSON.parse(JSON.stringify(state.todos))
+    todos[index].isCompleted = params.isCompleted
+    return { todos }
   }
 
 }, initailState) 

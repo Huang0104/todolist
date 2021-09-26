@@ -12,7 +12,9 @@ import {
   add_todo_success,
   add_todo,
   remove_todo,
-  remove_todo_success
+  remove_todo_success,
+  modify_todo,
+  modify_todo_success
 } from '../Actions/todo_actions'
 
 // 获取 todos 任务列表
@@ -20,6 +22,7 @@ function* load_todo_data() {
   let todos = yield axios.get('http://localhost:3005/api/todos').then(res => res.data)
   yield put(load_todo_success(todos))
 }
+
 // 添加 todos 任务
 function* add_todo_data(action) {
   // 发送异步请求
@@ -28,6 +31,7 @@ function* add_todo_data(action) {
   console.log(tasks)
   yield put(add_todo_success(tasks.task))
 }
+
 // 根据 id 删除 todos 任务
 function* remove_todo_data(action) {
   // params 将 id 拼接到路径上，才能删除
@@ -36,6 +40,13 @@ function* remove_todo_data(action) {
   yield put(remove_todo_success(res.tasks.id))
 }
 
+ // 修改 todos 任务状态
+ function* modify_todo_data(action) {
+   let res = yield axios.put('http://localhost:3005/api/todos/isCompleted', action.payload).then(res => res.data)
+   yield put(modify_todo_success(res))
+
+ }
+
 export default function* todoSaga() {
   // 获取 todos 任务列表操作
   yield takeEvery(load_todo, load_todo_data)
@@ -43,4 +54,6 @@ export default function* todoSaga() {
   yield takeEvery(add_todo, add_todo_data)
   // 删除 任务 操作
   yield takeEvery(remove_todo, remove_todo_data)
+  // 修改 任务 状态
+  yield takeEvery(modify_todo, modify_todo_data)
 }
