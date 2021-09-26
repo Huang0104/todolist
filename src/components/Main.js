@@ -5,9 +5,16 @@ import * as todoActions from '../store/Actions/todo_actions'
 
 class Main extends Component {
 
+  // 获取 todos 任务列表
   componentDidMount() {
     this.props.load_todo()
   }
+
+  // 删除任务
+  removeTodo(id) {
+    console.log(id)
+  }
+
   render() {
     return (
       <section className="main">
@@ -20,7 +27,7 @@ class Main extends Component {
                   <div className="view">
                     <input className="toggle" type="checkbox"/>
                     <label>{item.taskName}</label>
-                    <button className="destroy"></button>
+                    <button onClick={this.removeTodo.bind(this, item.id)} className="destroy"></button>
                   </div>
                   <input className="edit" />
                 </li>
