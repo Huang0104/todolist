@@ -16,7 +16,11 @@ import {
   modify_todo,
   modify_todo_success,
   clear_todo_completed,
-  clear_todo_completed_success
+  clear_todo_completed_success,
+  modify_todo_edit,
+  modify_todo_edit_success,
+  modify_todo_name,
+  modify_todo_name_success
 } from '../Actions/todo_actions'
 
 // 获取 todos 任务列表
@@ -54,6 +58,18 @@ function* remove_todo_data(action) {
    yield put(clear_todo_completed_success())
  }
 
+ // 编辑 todos 任务名称
+ function* edit_todo_data(action) {
+   const res = yield axios.put('http://localhost:3005/api/todos/isEditing', action.payload).then(res => res.data)
+   yield put(modify_todo_edit_success(res))
+ }
+
+ // 修改 todos 任务名称
+ function* name_todo_data(action) {
+   const res = yield axios.put('http://localhost:3005/api/todos', action.payload).then(res => res.data)
+   yield put(modify_todo_name_success(res))
+ }
+
 export default function* todoSaga() {
   // 获取 todos 任务列表操作
   yield takeEvery(load_todo, load_todo_data)
@@ -65,4 +81,8 @@ export default function* todoSaga() {
   yield takeEvery(modify_todo, modify_todo_data)
   // 清除 已完成任务
   yield takeEvery(clear_todo_completed, clear_todo_data)
+  // 编辑 任务 名称
+  yield takeEvery(modify_todo_edit, edit_todo_data)
+  // 修改 任务 名称
+  yield takeEvery(modify_todo_name, name_todo_data)
 }

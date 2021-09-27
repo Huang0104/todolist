@@ -18,6 +18,12 @@ class Main extends Component {
     }
   }
 
+  // 修改 任务名称
+  modify_name(id, ev) {
+    this.props.modify_todo_edit({id: id, isEditing: false})
+    this.props.modify_todo_name({id: id, taskName: ev.target.value})
+  }
+
   render() {
     return (
       <section className="main">
@@ -25,14 +31,17 @@ class Main extends Component {
         <ul className="todo-list">
           {
             this.props.todos.map(item => {
+              let classes = []
+              if (item.isCompleted) classes.push('completed')
+              if (item.isEditing) classes.push('editing')
               return (
-                <li key={item.id} className={item.isCompleted ? 'completed': ''}>
+                <li key={item.id} className={classes.join(' ')}>
                   <div className="view">
                     <input className="toggle" type="checkbox" defaultChecked={item.isCompleted} onChange={(ev)=>{this.props.modify_todo({id: item.id, isCompleted: ev.target.checked})}}/>
-                    <label>{item.taskName}</label>
+                    <label onDoubleClick={()=>{this.props.modify_todo_edit({id: item.id, isEditing: true})}}>{item.taskName}</label>
                     <button onClick={this.removeTodo.bind(this, item.id)} className="destroy"></button>
                   </div>
-                  <input className="edit" />
+                  <input className="edit" defaultValue={item.taskName} onBlur={this.modify_name.bind(this, item.id)}/>
                 </li>
               )
             })

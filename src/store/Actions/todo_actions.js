@@ -26,3 +26,11 @@ export const modify_todo_filter = createAction('modify_todo_filter')
 // 清除 todos 已完成任务
 export const clear_todo_completed = createAction('clear_todo_completed')
 export const clear_todo_completed_success = createAction('clear_todo_completedsuccess')
+
+// 编辑 todos 任务名称
+export const modify_todo_edit = createAction('modify_todo_edit')
+export const modify_todo_edit_success = createAction('modify_todo_edit_success')
+
+// 修改 todos 任务名称
+export const modify_todo_name = createAction('modify_todo_name')
+export const modify_todo_name_success = createAction('modify_todo_name_success')

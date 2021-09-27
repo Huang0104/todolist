@@ -9,7 +9,9 @@ import {
   remove_todo_success,
   modify_todo_success,
   modify_todo_filter,
-  clear_todo_completed_success
+  clear_todo_completed_success,
+  modify_todo_edit_success,
+  modify_todo_name_success
 } from '../Actions/todo_actions'
 
 const initailState = {
@@ -63,6 +65,29 @@ export default createReducer({
   [clear_todo_completed_success]: (state, action) => {
     let todos = JSON.parse(JSON.stringify(state.todos))
     todos = todos.filter(todo => !todo.isCompleted)
+    return {
+      ...state,
+      todos
+    }
+  },
+
+  // 编辑 todos 任务名称
+  [modify_todo_edit_success]: (state, action) => {
+    let params = action.payload.task
+    let todos = JSON.parse(JSON.stringify(state.todos))
+    let index = state.todos.findIndex(todo => todo.id === params.id)
+    todos[index].isEditing = params.isEditing
+    return {
+      ...state,
+      todos
+    }
+  },
+
+  //  修改 todos 任务名称
+  [modify_todo_name_success]: (state, action) => {
+    let todos = JSON.parse(JSON.stringify(state.todos))
+    let index = state.todos.findIndex(todo => todo.id === action.payload.task.id)
+    todos[index].taskName = action.payload.task.taskName
     return {
       ...state,
       todos
