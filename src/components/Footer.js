@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as todoActions from '../store/Actions/todo_actions'
+import { getIn } from 'immutable'
 
 class Footer extends Component {
 
@@ -37,7 +38,7 @@ class Footer extends Component {
 // 获取 store 数据
 const mapStoreToProps = state => {
   return {
-    todos: state.todoReducer.todos
+    todos: getIn(state.todoReducer, ['todos'])
   }
 }
 // 自定生成触发 Action 函数

@@ -25,14 +25,14 @@ import {
 
 // 获取 todos 任务列表
 function* load_todo_data() {
-  let todos = yield axios.get('http://localhost:3005/api/todos').then(res => res.data)
+  let todos = yield axios.get('/todos')
   yield put(load_todo_success(todos))
 }
 
 // 添加 todos 任务
 function* add_todo_data(action) {
   // 发送异步请求
-  let tasks = yield axios.post('http://localhost:3005/api/todos', {taskName: action.payload}).then(res => res.data)
+  let tasks = yield axios.post('/todos', {taskName: action.payload})
   // 重新发送新的指令
   yield put(add_todo_success(tasks.task))
 }
@@ -40,34 +40,34 @@ function* add_todo_data(action) {
 // 根据 id 删除 todos 任务
 function* remove_todo_data(action) {
   // params 将 id 拼接到路径上，才能删除
-  // let res = yield axios.delete('http://localhost:3005/api/todos',{id: action.payload}).then(res =>　res.data) 错误的传参
-  let res = yield axios.delete('http://localhost:3005/api/todos',{params:{id: action.payload}}).then(res =>　res.data)
+  // let res = yield axios.delete('/todos',{id: action.payload}).then(res =>　res.data) 错误的传参
+  let res = yield axios.delete('/todos',{params:{id: action.payload}})
   yield put(remove_todo_success(res.tasks.id))
 }
 
  // 修改 todos 任务状态
  function* modify_todo_data(action) {
-   let res = yield axios.put('http://localhost:3005/api/todos/isCompleted', action.payload).then(res => res.data)
-   yield put(modify_todo_success(res))
+   let { task } = yield axios.put('/todos/isCompleted', action.payload)
+   yield put(modify_todo_success(task))
 
  }
 
  // 清除 todos 已完成任务
  function* clear_todo_data() {
-   yield axios.delete('http://localhost:3005/api/todos/clearCompleted')
+   yield axios.delete('/todos/clearCompleted')
    yield put(clear_todo_completed_success())
  }
 
  // 编辑 todos 任务名称
  function* edit_todo_data(action) {
-   const res = yield axios.put('http://localhost:3005/api/todos/isEditing', action.payload).then(res => res.data)
-   yield put(modify_todo_edit_success(res))
+   const { task } = yield axios.put('/todos/isEditing', action.payload)
+   yield put(modify_todo_edit_success(task))
  }
 
  // 修改 todos 任务名称
  function* name_todo_data(action) {
-   const res = yield axios.put('http://localhost:3005/api/todos', action.payload).then(res => res.data)
-   yield put(modify_todo_name_success(res))
+   const { task } = yield axios.put('/todos', action.payload)
+   yield put(modify_todo_name_success(task))
  }
 
 export default function* todoSaga() {

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as createActions from '../store/Actions/todo_actions'
+import { get, getIn } from 'immutable'
 /**
  */
 
@@ -32,9 +33,11 @@ class Header extends Component {
   }
 }
 // 组件与 store
-const mapStoreToProps = state => ({
-  todos: state.todoReducer.todos
-})
+const mapStoreToProps = state => {
+  return {
+    todos: get(state.todoReducer, ['todos'])
+  }
+}
 // 组件与 dispatch
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators(createActions, dispatch)

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as todoActions from '../store/Actions/todo_actions'
+import { getIn } from 'immutable'
 
 class Main extends Component {
 
@@ -55,7 +56,7 @@ class Main extends Component {
 // 获取 store 数据
 const mapStoreToProps = state => {
   return {
-    todos: modofyTodoFilter(state.todoReducer.todos, state.todoReducer.filter)
+    todos: modofyTodoFilter(getIn(state.todoReducer, ['todos']), getIn(state.todoReducer, ['filter']))
   }
 }
 // 自定生成触发 Action 函数
